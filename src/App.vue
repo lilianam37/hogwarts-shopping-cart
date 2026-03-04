@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-import {computed, ref} from 'vue'
+import {computed, watch, ref} from 'vue'
 let username='Harry'
 let shoppingCartItems=ref([
   {
@@ -134,6 +134,10 @@ let shippingEstimate=computed(()=> subtotal.value>10000 ? 100:50)
 let taxEstimate=computed(()=> subtotal.value*0.08)
 let total=computed(()=>subtotal.value+shippingEstimate.value +taxEstimate.value)
 
+watch(shoppingCartItems, ()=>{
+    localStorage.setItem('hogwartsShoppingCart', JSON.stringify(shoppingCartItems.value))
+}, {deep:true}
+)
 </script>
 
 <style scoped>
